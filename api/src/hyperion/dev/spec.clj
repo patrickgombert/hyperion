@@ -39,7 +39,6 @@
     (context "types"
       (tags :types)
       (it-handles-types))
-
     ))
 
 (run-specs)
