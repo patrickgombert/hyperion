@@ -1,13 +1,13 @@
 (ns hyperion.redis.spec-helper
-  (:require [speclj.core :refer :all ]
-            [hyperion.redis :refer :all ]
-            [taoensso.carmine :as r]
+  (:require [speclj.core :refer :all]
+            [hyperion.redis :refer :all]
+            [accession.core :as redis]
             [hyperion.api :refer [*ds*]]))
 
 (defn- clear-db [db]
-  (let [test-keys (carmine db (r/keys "hyperion:*"))]
+  (let [test-keys (redis/with-connection db (redis/keys "*"))]
       (when (seq test-keys)
-        (carmine db (apply r/del test-keys)))))
+        (with-redis db (apply redis/del test-keys)))))
 
 (defn with-testable-redis-datastore []
   (list
